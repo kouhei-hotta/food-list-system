@@ -3,5 +3,7 @@
 <c:import url="../layout/app.jsp">
     <c:param name="content">
         <h2>食料品管理システムへようこそ</h2>
+        <br /><br />
+        <p><a href="<c:url value='/login' />">ログイン</a></p>
     </c:param>
 </c:import>
