@@ -4,6 +4,7 @@
     <c:param name="content">
         <h2>食料品管理システムへようこそ</h2>
         <br /><br />
+        <p><a href="<c:url value='/foods/index' />">食料品一覧</a></p>
         <p><a href="<c:url value='/login' />">ログイン</a></p>
     </c:param>
 </c:import>
