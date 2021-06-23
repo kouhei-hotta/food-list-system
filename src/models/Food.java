@@ -17,7 +17,7 @@ import javax.persistence.Table;
 @NamedQueries({
     @NamedQuery(
             name = "getAllFoods",
-            query = "SELECT f FROM Food AS f ORDER BY f.id DESC")
+            query = "SELECT f FROM Food AS f ORDER BY f.time_limit")
 })
 
 @Entity
@@ -40,8 +40,8 @@ public class Food {
     @Column(name = "open_flag", nullable = false)
     private Integer open_flag;
 
-    @Column(name = "limit", nullable = false)
-    private Date limit;
+    @Column(name = "time_limit", nullable = false)
+    private Date time_limit;
 
     public Integer getId() {
         return id;
@@ -83,12 +83,12 @@ public class Food {
         this.open_flag = open_flag;
     }
 
-    public Date getLimit() {
-        return limit;
+    public Date getTime_limit() {
+        return time_limit;
     }
 
-    public void setLimit(Date limit) {
-        this.limit = limit;
+    public void setLimit(Date time_limit) {
+        this.time_limit = time_limit;
     }
 
 

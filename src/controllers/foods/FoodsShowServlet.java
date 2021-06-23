@@ -1,7 +1,6 @@
 package controllers.foods;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.servlet.RequestDispatcher;
@@ -15,16 +14,16 @@ import models.Food;
 import utils.DBUtil;
 
 /**
- * Servlet implementation class FoodsIndexServlet
+ * Servlet implementation class FoodsShowServlet
  */
-@WebServlet("/foods/index")
-public class FoodsIndexServlet extends HttpServlet {
+@WebServlet("/foods/show")
+public class FoodsShowServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public FoodsIndexServlet() {
+    public FoodsShowServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,15 +34,14 @@ public class FoodsIndexServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EntityManager em = DBUtil.createEntityManager();
 
+        Food f = em.find(Food.class, Integer.parseInt(request.getParameter("id")));
 
+        em.close();
 
-        List<Food> foods = (List<Food>)em.createNamedQuery("getAllFoods", Food.class).getResultList();
-        request.setAttribute("foods", foods);
-        if(request.getSession().getAttribute("flush") != null) {
-            request.setAttribute("flush", request.getSession().getAttribute("flush"));
-            request.getSession().removeAttribute("flush");
-        }
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/foods/index.jsp");
+        request.setAttribute("food", f);
+        request.setAttribute("u_token", request.getSession().getId());
+
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/foods/show.jsp");
         rd.forward(request, response);
     }
 

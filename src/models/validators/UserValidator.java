@@ -12,7 +12,7 @@ public class UserValidator {
     public static List<String> validate(User u, Boolean codeDuplicateCheckFlag, Boolean passwordCheckFlag) {
         List<String> errors = new ArrayList<String>();
 
-        String email_error = validateCode(u.getEmail(), codeDuplicateCheckFlag);
+        String email_error = validateEmail(u.getEmail(), codeDuplicateCheckFlag);
         if(!email_error.equals("")) {
             errors.add(email_error);
         }
@@ -31,7 +31,7 @@ public class UserValidator {
     }
 
     // メールアドレス
-    private static String validateCode(String email, Boolean codeDuplicateCheckFlag) {
+    private static String validateEmail(String email, Boolean codeDuplicateCheckFlag) {
         // 必須入力チェック
         if(email == null || email.equals("")) {
             return "メールアドレスを入力してください。";
