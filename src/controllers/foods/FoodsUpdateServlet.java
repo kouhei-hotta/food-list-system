@@ -1,4 +1,5 @@
 package controllers.foods;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -14,19 +15,22 @@ import models.Food;
 import models.User;
 import models.validators.FoodValidator;
 import utils.DBUtil;
+
 /**
- * Servlet implementation class FoodsCreateServlet
+ * Servlet implementation class FoodsUpdateServlet
  */
-@WebServlet("/foods/create")
-public class FoodsCreateServlet extends HttpServlet {
+@WebServlet("/foods/update")
+public class FoodsUpdateServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
+
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public FoodsCreateServlet() {
+    public FoodsUpdateServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
+
     /**
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
      */
@@ -35,7 +39,8 @@ public class FoodsCreateServlet extends HttpServlet {
         if(u_token != null && u_token.equals(request.getSession().getId()));
             User login_user = (User)request.getSession().getAttribute("login_user");
             EntityManager em = DBUtil.createEntityManager();
-            Food f = new Food();
+            // Food f = new Food();
+            Food f = em.find(Food.class, Integer.parseInt(request.getParameter("id")));
             f.setFood_name(request.getParameter("food_name"));
             // String amount = request.getParameter("amount");
             // f.setAmount(Integer.parseInt(amount));
@@ -61,26 +66,28 @@ public class FoodsCreateServlet extends HttpServlet {
             f.setOpen_flag(open_flag);
             f.setLimit(java.sql.Date.valueOf(time_limit));
             f.setUser(login_user);
-           System.out.println("***");
-           System.out.println("食材名: " + f.getFood_name());
-           System.out.println("数量: " + f.getAmount());
-           System.out.println("開封状態: " + f.getOpen_flag());
-           System.out.println("賞味期限: " + f.getTime_limit());
-           System.out.println("ユーザー名: " + f.getUser().getName());
            List<String> errors = FoodValidator.validate(f);
            if(errors.size() > 0) {
                em.close();
+
                request.setAttribute("u_token", request.getSession().getId());
                request.setAttribute("food", f);
                request.setAttribute("errors", errors);
-               RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/foods/new.jsp");
+
+               RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/foods/edit.jsp");
                rd.forward(request, response);
            } else {
-           em.getTransaction().begin();
-            em.persist(f);
+            em.getTransaction().begin();
             em.getTransaction().commit();
             em.close();
+            request.getSession().setAttribute("flush", "更新が完了しました。");
+
+            request.getSession().removeAttribute("food_id");
+
+
             response.sendRedirect(request.getContextPath() + "/foods/index");
            }
+        }
     }
-}
+
+

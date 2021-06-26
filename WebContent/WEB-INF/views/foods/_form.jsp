@@ -27,6 +27,6 @@
 <label for="time_limit">賞味期限</label><br />
 <input type="date" name="time_limit" value="${food.time_limit}" />
 <br /><br />
-
+<input type="hidden" name="id" value="${food.id}" />
 <input type="hidden" name="u_token" value="${u_token}" />
 <button type="submit">登録</button>

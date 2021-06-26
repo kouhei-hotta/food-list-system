@@ -19,7 +19,17 @@
                         </tr>
                         <tr>
                             <th>開封or未開封</th>
-                            <td><c:out value="${food.open_flag}" /></td>
+                            <td>
+                             <c:choose>
+                                <c:when test="${food.open_flag == 0}">
+                                    <c:out value="未開封"/>
+                                </c:when>
+                                <c:otherwise>
+                                    <c:out value="開封" />
+                                 </c:otherwise>
+                            </c:choose>
+                            </td>
+                           <!--  <td><c:out value="${food.open_flag}" /></td> -->
                         </tr>
                         <tr>
                             <th>賞味期限</th>
@@ -28,16 +38,14 @@
                             </td>
                         </tr>
                         <tr>
-                            <th>購入者</th>
-                            <td>
-                                <c:out value="${food.user.name}" />
-                            </td>
+                             <th>購入者</th>
+                             <td><c:out value="${food.user.name}" /></td>
                         </tr>
                     </tbody>
                 </table>
-
+                <!-- 自分の登録したものだけ編集するボタンが出る -->
                 <c:if test="${sessionScope.login_user.id == food.user.id}">
-                    <p><a href="<c:url value="/foods/edit?id=${user.id}" />">編集する</a></p>
+                    <p><a href="<c:url value="/foods/edit?id=${food.id}" />">編集する</a></p>
                 </c:if>
             </c:when>
             <c:otherwise>

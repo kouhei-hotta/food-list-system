@@ -145,12 +145,14 @@ table#food_list .amount {
 }
 
 table#food_list .open_flag {
-    width: 37%;
+    width: 5%;
 }
 
-table#food_list .limit {
-    width: 13%;
+table#food_list .time_limit {
+    width: 20%;
 }
+table#food_list .user_name {
+    width: 13%;
 h3 {
     font-size: larger;
 }

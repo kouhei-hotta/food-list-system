@@ -11,19 +11,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import models.Food;
+import models.User;
 import utils.DBUtil;
 
 /**
- * Servlet implementation class FoodsShowServlet
+ * Servlet implementation class FoodsEditServlet
  */
-@WebServlet("/foods/show")
-public class FoodsShowServlet extends HttpServlet {
+@WebServlet("/foods/edit")
+public class FoodsEditServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public FoodsShowServlet() {
+    public FoodsEditServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,11 +39,14 @@ public class FoodsShowServlet extends HttpServlet {
 
         em.close();
 
+        User login_user = (User)request.getSession().getAttribute("login_user");
+        if(f != null && login_user.getId() == f.getUser().getId()) {
+            request.setAttribute("food", f);
+            request.setAttribute("u_token", request.getSession().getId());
+            request.getSession().setAttribute("food_id", f.getId());
+        }
 
-        request.setAttribute("food", f);
-        request.setAttribute("u_token", request.getSession().getId());
-
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/foods/show.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/foods/edit.jsp");
         rd.forward(request, response);
     }
 

@@ -35,7 +35,7 @@ public class Food {
     private String food_name;
 
     @Column(name = "amount", nullable = false)
-    private Integer amount;     // 量
+    private String amount;     // 量
 
     @Column(name = "open_flag", nullable = false)
     private Integer open_flag;
@@ -67,11 +67,11 @@ public class Food {
         this.food_name = food_name;
     }
 
-    public Integer getAmount() {
+    public String getAmount() {
         return amount;
     }
 
-    public void setAmount(Integer amount) {
+    public void setAmount(String amount) {
         this.amount = amount;
     }
 

@@ -1,6 +1,7 @@
 package controllers.foods;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -38,7 +39,10 @@ public class FoodsIndexServlet extends HttpServlet {
 
 
         List<Food> foods = (List<Food>)em.createNamedQuery("getAllFoods", Food.class).getResultList();
+        // 現在日時の LocatTimeインスタンスを取得
+        LocalDate now = LocalDate.now();
         request.setAttribute("foods", foods);
+        request.setAttribute("now", now);
         if(request.getSession().getAttribute("flush") != null) {
             request.setAttribute("flush", request.getSession().getAttribute("flush"));
             request.getSession().removeAttribute("flush");
