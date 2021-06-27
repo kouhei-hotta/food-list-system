@@ -145,7 +145,7 @@ table#food_list .amount {
 }
 
 table#food_list .open_flag {
-    width: 5%;
+    width: 10%;
 }
 
 table#food_list .time_limit {
